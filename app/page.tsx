@@ -7,6 +7,9 @@ export default function RootPage() {
       <LinkButton theme="secondary" href="/client-server">
         Client and server component
       </LinkButton>
+      <LinkButton theme="secondary" href="/transitions">
+        Transitions
+      </LinkButton>
     </div>
   );
 }
