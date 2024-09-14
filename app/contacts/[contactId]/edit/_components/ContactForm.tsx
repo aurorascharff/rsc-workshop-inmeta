@@ -1,15 +1,23 @@
+'use client';
+
 import React from 'react';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import LinkButton from '@/components/ui/LinkButton';
 import TextArea from '@/components/ui/TextArea';
-import { getContact } from '@/data/services/getContact';
+import { updateContact } from '@/data/actions/updateContact';
+import type { Contact } from '@prisma/client';
 
-export default async function ContactForm({ contactId }: { contactId: string }) {
-  const contact = await getContact(contactId);
-
+export default function ContactForm({ contact }: { contact: Contact }) {
   return (
-    <form className="flex max-w-[40rem] flex-col gap-4 @container">
+    <form
+      onSubmit={async e => {
+        e.preventDefault();
+        const formData = new FormData(e.currentTarget);
+        await updateContact(contact.id, formData);
+      }}
+      className="flex max-w-[40rem] flex-col gap-4 @container"
+    >
       <div className="grip-rows-6 grid grid-cols-1 items-center gap-2 @sm:grid-cols-[1fr_4fr] @sm:gap-4">
         <span className="flex">Name</span>
         <div className="flex gap-4">
@@ -47,7 +55,7 @@ export default async function ContactForm({ contactId }: { contactId: string }) 
         <TextArea className="grow" defaultValue={contact.notes || undefined} name="notes" rows={6} />
       </div>
       <div className="flex gap-2 self-end">
-        <LinkButton theme="secondary" href={`/contacts/${contactId}`}>
+        <LinkButton theme="secondary" href={`/contacts/${contact.id}`}>
           Cancel
         </LinkButton>
         <Button theme="primary" type="submit">
