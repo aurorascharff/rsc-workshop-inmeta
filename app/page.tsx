@@ -10,6 +10,9 @@ export default function RootPage() {
       <LinkButton theme="secondary" href="/transitions">
         Transitions
       </LinkButton>
+      <LinkButton theme="secondary" href="/suspense">
+        Suspense
+      </LinkButton>
     </div>
   );
 }
