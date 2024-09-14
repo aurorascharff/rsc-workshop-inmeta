@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import React, { useTransition } from 'react';
 import { cn } from '@/utils/cn';
 import type { Contact } from '@prisma/client';
@@ -11,6 +11,8 @@ export default function ContactButton({ contact }: { contact: Contact }) {
   const isActive = pathname.includes(`/contacts/${contact.id}`);
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
+  const searchParams = useSearchParams();
+  const q = searchParams.get('q') || '';
 
   return (
     <Link
@@ -22,10 +24,10 @@ export default function ContactButton({ contact }: { contact: Contact }) {
       onClick={e => {
         e.preventDefault();
         startTransition(() => {
-          router.push(`/contacts/${contact.id}`);
+          router.push(`/contacts/${contact.id}?q=${q}`);
         });
       }}
-      href={`/contacts/${contact.id}`}
+      href={`/contacts/${contact.id}?q=${q}`}
     >
       {contact.first || contact.last ? (
         <>
