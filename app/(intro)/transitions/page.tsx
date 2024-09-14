@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useTransition } from 'react';
 import Button from '@/components/ui/Button';
 
 function SlowComponent() {
@@ -20,6 +20,7 @@ for (let i = 0; i < 500; i++) {
 
 export default function TransitionsPage() {
   const [tab, setTab] = useState(1);
+  const [isPending, startTransition] = useTransition();
 
   return (
     <>
@@ -27,21 +28,24 @@ export default function TransitionsPage() {
       <div className="flex gap-4">
         <Button
           onClick={() => {
-            return setTab(1);
+            setTab(1);
           }}
         >
           Tab 1 {tab === 1 && '👈'}
         </Button>
         <Button
           onClick={() => {
-            return setTab(2);
+            setTab(2);
           }}
         >
           Tab 2 {tab === 2 && '👈'}
         </Button>
         <Button
+          className={isPending ? 'opacity-50' : ''}
           onClick={() => {
-            return setTab(3);
+            startTransition(() => {
+              setTab(3);
+            });
           }}
         >
           Tab 3 {tab === 3 && '👈'}
