@@ -9,6 +9,8 @@ type Props = {
 };
 
 export default function ClientComponent({ children, content, mutateData }: Props) {
+  console.log('ClientComponent');
+
   // Uten "use client" kan vi ikke bruke browser-ting som state, effetcs, onclick, wind.location osv
   return (
     <div className="border-2 border-red-500 p-4">
