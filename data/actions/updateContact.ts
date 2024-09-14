@@ -8,10 +8,10 @@ import { slow } from '@/utils/slow';
 export async function updateContact(contactId: string, formData: FormData) {
   await slow();
 
-  const contact = Object.fromEntries(formData);
+  const data = Object.fromEntries(formData);
 
   await prisma.contact.update({
-    data: contact,
+    data,
     where: {
       id: contactId,
     },
