@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useTransition } from 'react';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import LinkButton from '@/components/ui/LinkButton';
@@ -9,12 +9,16 @@ import { updateContact } from '@/data/actions/updateContact';
 import type { Contact } from '@prisma/client';
 
 export default function ContactForm({ contact }: { contact: Contact }) {
+  const [isPending, startTransition] = useTransition();
+
   return (
     <form
       onSubmit={async e => {
         e.preventDefault();
-        const formData = new FormData(e.currentTarget);
-        await updateContact(contact.id, formData);
+        startTransition(async () => {
+          const formData = new FormData(e.currentTarget);
+          await updateContact(contact.id, formData);
+        });
       }}
       className="flex max-w-[40rem] flex-col gap-4 @container"
     >
@@ -58,8 +62,8 @@ export default function ContactForm({ contact }: { contact: Contact }) {
         <LinkButton theme="secondary" href={`/contacts/${contact.id}`}>
           Cancel
         </LinkButton>
-        <Button theme="primary" type="submit">
-          Save
+        <Button disabled={isPending} theme="primary" type="submit">
+          {isPending ? 'Saving...' : 'Save'}
         </Button>
       </div>
     </form>
