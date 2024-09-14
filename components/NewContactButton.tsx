@@ -1,19 +1,24 @@
 'use client';
 
-import React from 'react';
+import React, { useTransition } from 'react';
 import { createEmptyContact } from '@/data/actions/createEmptyContact';
 import Button from './ui/Button';
 
 export default function NewContactButton() {
+  const [isPending, startTransition] = useTransition();
+
   return (
     <Button
-      onClick={async () => {
-        await createEmptyContact();
+      disabled={isPending}
+      onClick={() => {
+        startTransition(async () => {
+          await createEmptyContact();
+        });
       }}
       type="submit"
       theme="secondary"
     >
-      New
+      {isPending ? 'Creating...' : 'New'}
     </Button>
   );
 }
