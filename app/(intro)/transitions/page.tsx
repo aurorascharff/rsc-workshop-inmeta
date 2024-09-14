@@ -20,11 +20,13 @@ for (let i = 0; i < 500; i++) {
 
 export default function TransitionsPage() {
   const [tab, setTab] = useState(1);
+  const [count, setCount] = useState(0);
   const [isPending, startTransition] = useTransition();
 
   return (
     <>
       <h1>Transitions</h1>
+      {count}
       <div className="flex gap-4">
         <Button
           onClick={() => {
@@ -44,6 +46,9 @@ export default function TransitionsPage() {
           className={isPending ? 'opacity-50' : ''}
           onClick={() => {
             startTransition(() => {
+              setCount(count => {
+                return count + 1;
+              });
               setTab(3);
             });
           }}
