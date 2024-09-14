@@ -18,5 +18,5 @@ export async function updateContact(contactId: string, formData: FormData) {
   });
 
   revalidatePath('/');
-  redirect(`/contacts/${contact.id}`);
+  redirect(`/contacts/${contactId}`);
 }
