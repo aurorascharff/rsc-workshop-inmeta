@@ -13,6 +13,9 @@ export default function RootPage() {
       <LinkButton theme="secondary" href="/suspense">
         Suspense
       </LinkButton>
+      <LinkButton theme="secondary" href="/data-fetching">
+        Data Fetching
+      </LinkButton>
     </div>
   );
 }
