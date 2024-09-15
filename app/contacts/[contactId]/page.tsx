@@ -2,13 +2,12 @@ import Image from 'next/image';
 import LinkButton from '@/components/ui/LinkButton';
 import { getContact } from '@/data/services/getContact';
 import GithubLogo from '@/public/github-mark.svg';
+import { routes } from '@/validations/routeSchema';
 import DeleteContactButton from './_components/DeleteContactButton';
 import Favorite from './_components/Favorite';
 
 type PageProps = {
-  params: {
-    contactId: string;
-  };
+  params: unknown;
 };
 
 // // In local development, the `generateMetadata` will not be streamed and will block the page until it resolves, hindering the suspense boundary from showing.
@@ -27,7 +26,8 @@ type PageProps = {
 // }
 
 export default async function ContactPage({ params }: PageProps) {
-  const contact = await getContact(params.contactId);
+  const { contactId } = routes.contactId.$parseParams(params);
+  const contact = await getContact(contactId);
 
   return (
     <div className="flex flex-col gap-4 lg:flex-row">
@@ -77,10 +77,10 @@ export default async function ContactPage({ params }: PageProps) {
         )}
         {contact.notes && <div className="max-h-[300px] w-full overflow-auto 2xl:w-1/2">{contact.notes}</div>}
         <div className="my-4 flex gap-2">
-          <LinkButton theme="secondary" href={`/contacts/${params.contactId}/edit`}>
+          <LinkButton theme="secondary" href={`/contacts/${contactId}/edit`}>
             Edit
           </LinkButton>
-          <DeleteContactButton contactId={params.contactId} />
+          <DeleteContactButton contactId={contactId} />
         </div>
       </div>
     </div>
