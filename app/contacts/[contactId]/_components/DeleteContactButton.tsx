@@ -22,9 +22,7 @@ export default function DeleteContactButton({ contactId }: { contactId: string }
       }}
       action={deleteContactById}
     >
-      <SubmitButton type="submit" theme="destroy">
-        Delete
-      </SubmitButton>
+      <SubmitButton theme="destroy">Delete</SubmitButton>
     </form>
   );
 }
