@@ -1,7 +1,13 @@
 'use client';
 
-import React from 'react';
+import React, { use } from 'react';
 
-export default function ClientComponent() {
-  return <div>ClientComponent</div>;
+type Props = {
+  dataPromise: Promise<number>;
+};
+
+export default function ClientComponent({ dataPromise }: Props) {
+  const data = use(dataPromise);
+
+  return <div>ClientComponent {data}</div>;
 }

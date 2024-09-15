@@ -41,7 +41,7 @@ export default async function DataFetchingPage() {
   //   const [data1, data2] = await Promise.all([getData(1000), getData(1000)]);
   //   console.log('Parallel, time: ' + new Date().getSeconds());
 
-  const data = await getData(3000);
+  const dataPromise = getData(3000);
 
   return (
     <>
@@ -57,7 +57,9 @@ export default async function DataFetchingPage() {
       <Suspense fallback={<div>Loading...</div>}>
         <SecondComponent />
       </Suspense> */}
-      <ClientComponent />
+      <Suspense fallback={<div>Loading...</div>}>
+        <ClientComponent dataPromise={dataPromise} />
+      </Suspense>
     </>
   );
 }
