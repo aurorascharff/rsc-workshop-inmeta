@@ -1,9 +1,8 @@
-import { render, screen } from '@testing-library/react';
-import { Suspense } from 'react';
+import { screen } from '@testing-library/react';
 import { vi } from 'vitest';
+import { suspenseRender } from '@/test-utils/suspenseRender';
 import ContactPage from '../page';
 import type { Contact } from '@prisma/client';
-import { suspenseRender } from '@/test-utils/suspenseRender';
 
 vi.mock('@/data/services/getContact', () => {
   return {
