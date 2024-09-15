@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useActionState } from 'react';
+import React, { use, useActionState } from 'react';
 import Input from '@/components/ui/Input';
 import LinkButton from '@/components/ui/LinkButton';
 import SubmitButton from '@/components/ui/SubmitButton';
@@ -9,7 +9,9 @@ import { updateContact } from '@/data/actions/updateContact';
 import type { ContactSchemaErrorType } from '@/validations/contactSchema';
 import type { Contact } from '@prisma/client';
 
-export default function ContactForm({ contact }: { contact: Contact }) {
+export default function ContactForm({ contactPromise }: { contactPromise: Promise<Contact> }) {
+  const contact = use(contactPromise);
+
   const updateContactById = updateContact.bind(null, contact.id);
   const [state, updateContactAction] = useActionState(updateContactById, {
     data: {
