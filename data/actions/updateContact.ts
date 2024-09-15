@@ -24,7 +24,7 @@ export async function updateContact(contactId: string, _prevState: State, formDa
   }
 
   await prisma.contact.update({
-    data,
+    data: result.data,
     where: {
       id: contactId,
     },
